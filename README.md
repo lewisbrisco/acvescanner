@@ -1,5 +1,5 @@
 # acvescanner
-This project was created for my 4th year Dissertation project for the Degree of BSc Digital Security and Foresnics at Glasgow Caledonian University.
+This project was created for my 4th year dissertation project for the degree of BSc Digital Security and Foresnics at Glasgow Caledonian University.
 
 This tool primarily uses cve-bin-tool which can be found here, a thanks is also included in the program.
 https://github.com/intel/cve-bin-tool
