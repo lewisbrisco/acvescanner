@@ -6,6 +6,6 @@ https://github.com/intel/cve-bin-tool
 
 The main goal of this software is to provide an accessible, free peice of software for individuals and SME's to be able to easily and reliably scan their file systems for potential vulnerabilities.
 
-Overall the hope is that ACVESCANNER has the potential to be a valuable contribution to the digital security community, helping to increase awareness of potential vulnerabilities and improving the overall security of systems.
+Overall the hope is that acvescanner has the potential to be a valuable contribution to the digital security community, helping to increase awareness of potential vulnerabilities and improving the overall security of systems.
 
 - Lewis Brisco
