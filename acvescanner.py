@@ -285,7 +285,7 @@ else:
                 path = vulnerability[0].strip()
     
                 if len(cve_list) > 0:
-                    print('Vulnerabile File Number #'+str(i))
+                    print('Vulnerable File Number #'+str(i))
                     i += 1
                     print('This is the path where the vulnerabilities were found')
                     print(path)
@@ -339,7 +339,7 @@ else:
                 path = vulnerability[0].strip()
                 
                 if len(cve_list) > 0:
-                    writer.writerow(['Vulnerabile File Number #'+str(i)])
+                    writer.writerow(['Vulnerable File Number #'+str(i)])
                     i += 1
                     writer.writerow(['This is the path where the vulnerabilities were found'])
                     writer.writerow([path])
