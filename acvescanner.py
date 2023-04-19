@@ -274,39 +274,40 @@ else:
             print('High = 7.0-8.9')
             print('Critical = 9.0-10.0')
             print('None means no vulnerability while critical is extremely severe and could cause catastrophic damage') 
+            try: 
+                for vulnerability in vulnerabilities:
+                    path = vulnerability[0].strip()  # Extract path and remove leading/trailing whitespace
 
-            for vulnerability in vulnerabilities:
-                path = vulnerability[0].strip()  # Extract path and remove leading/trailing whitespace
+                    description = re.findall(r'CVE BINARY TOOL version:(?:(?!Root 0 :)[\d.\n\s\S])*', vulnerability[1].decode('latin-1').strip())
+                    description = description[0].strip('\r\n') # Remove leading/trailing line breaks and carriage returns
+                    
+                    cve_list = re.findall(r'CVE-\d{4}-\d{4,7}', description)
+                    path = vulnerability[0].strip()
+        
+                    if len(cve_list) > 0:
+                        print('Vulnerable File Number #'+str(i))
+                        i += 1
+                        print('This is the path where the vulnerabilities were found')
+                        print(path)
+                        print("")
+                        print('This is a table outlining the severity of each vulnerability found')
+                        print(description)
+                        print("")
+                        #print(cve_list) #this line writes the list of vulnerabilities found
+                        print('Follow the links below to find more information on each vulnerability found:')
+                        for cve_number in range(len(cve_list)):
+                            try:
+                                cve_url = "https://www.cvedetails.com/cve/" + cve_list[cve_number]
+                                print(cve_url)
+                            except:
+                                print()
 
-                description = re.findall(r'CVE BINARY TOOL version:(?:(?!Root 0 :)[\d.\n\s\S])*', vulnerability[1].decode('latin-1').strip())
-                description = description[0].strip('\r\n') # Remove leading/trailing line breaks and carriage returns
-                
-                cve_list = re.findall(r'CVE-\d{4}-\d{4,7}', description)
-                path = vulnerability[0].strip()
-    
-                if len(cve_list) > 0:
-                    print('Vulnerable File Number #'+str(i))
-                    i += 1
-                    print('This is the path where the vulnerabilities were found')
-                    print(path)
-                    print("")
-                    print('This is a table outlining the severity of each vulnerability found')
-                    print(description)
-                    print("")
-                    #print(cve_list) #this line writes the list of vulnerabilities found
-                    print('Follow the links below to find more information on each vulnerability found:')
-                    for cve_number in range(len(cve_list)):
-                        try:
-                            cve_url = "https://www.cvedetails.com/cve/" + cve_list[cve_number]
-                            print(cve_url)
-                        except:
-                            print()
-
-                if len(cve_list) == 0:
-                    safe_list.append([path])
-
-                cve_list = []
-                print("")
+                    if len(cve_list) == 0:
+                        safe_list.append([path])
+            except:
+                print("No Vulnerabilities Found")
+            cve_list = []
+            print("")
             print('END OF VULNERABILITY LIST')
             print("-" * 100)
             print('')
@@ -330,37 +331,41 @@ else:
             writer.writerow(['None means no vulnerability while critical is extremely severe and could cause catastrophic damage']) 
 
             for vulnerability in vulnerabilities:
-                path = vulnerability[0].strip()  # Extract path and remove leading/trailing whitespace
+                try:
+                    path = vulnerability[0].strip()  # Extract path and remove leading/trailing whitespace
 
-                description = re.findall(r'CVE BINARY TOOL version:(?:(?!Root 0 :)[\d.\n\s\S])*', vulnerability[1].decode('latin-1').strip())
-                description = description[0].strip('\r\n') # Remove leading/trailing line breaks and carriage returns
-                
-                cve_list = re.findall(r'CVE-\d{4}-\d{4,7}', description)
-                path = vulnerability[0].strip()
-                
-                if len(cve_list) > 0:
-                    writer.writerow(['Vulnerable File Number #'+str(i)])
-                    i += 1
-                    writer.writerow(['This is the path where the vulnerabilities were found'])
-                    writer.writerow([path])
+                    description = re.findall(r'CVE BINARY TOOL version:(?:(?!Root 0 :)[\d.\n\s\S])*', vulnerability[1].decode('latin-1').strip())
+                    description = description[0].strip('\r\n') # Remove leading/trailing line breaks and carriage returns
+                    
+                    cve_list = re.findall(r'CVE-\d{4}-\d{4,7}', description)
+                    path = vulnerability[0].strip()
+                    
+                    if len(cve_list) > 0:
+                        writer.writerow(['Vulnerable File Number #'+str(i)])
+                        i += 1
+                        writer.writerow(['This is the path where the vulnerabilities were found'])
+                        writer.writerow([path])
+                        writer.writerow("")
+                        writer.writerow(['This is a table outlining the severity of each vulnerability found'])
+                        writer.writerow([description])
+                        writer.writerow("")
+                        #writer.writerow([cve_list]) #this line writes the list of vulnerabilities found
+                        writer.writerow(['Follow the links below to find more information on each vulnerability found:'])
+                        for cve_number in range(len(cve_list)):
+                            try:
+                                cve_url = "https://www.cvedetails.com/cve/" + cve_list[cve_number]
+                                writer.writerow([cve_url])
+                            except:
+                                print()
+
+                    if len(cve_list) == 0:
+                        safe_list.append([path])   
+
+                    cve_list = []
                     writer.writerow("")
-                    writer.writerow(['This is a table outlining the severity of each vulnerability found'])
-                    writer.writerow([description])
-                    writer.writerow("")
-                    #writer.writerow([cve_list]) #this line writes the list of vulnerabilities found
-                    writer.writerow(['Follow the links below to find more information on each vulnerability found:'])
-                    for cve_number in range(len(cve_list)):
-                        try:
-                            cve_url = "https://www.cvedetails.com/cve/" + cve_list[cve_number]
-                            writer.writerow([cve_url])
-                        except:
-                            print()
+                except:
+                    writer.writerow("No vulnerabilities found")
 
-                if len(cve_list) == 0:
-                    safe_list.append([path])   
-
-                cve_list = []
-                writer.writerow("")
             writer.writerow(['END OF VULNERABILITY LIST'])
             writer.writerow(["-" * 100])
             writer.writerow("")
