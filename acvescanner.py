@@ -176,7 +176,7 @@ option_directory = 99
 while not option_directory in (1,2,3,4,0):
     try:
         menu_directory()
-        option_directory = int(input("Enter your output file preference: ")) 
+        option_directory = int(input("Enter your scan type preference: ")) 
     except:
         option_directory = 99
 
